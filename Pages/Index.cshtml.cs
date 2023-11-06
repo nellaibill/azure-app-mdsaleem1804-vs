@@ -1,20 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using azure_app_mdsaleem1804_vs.Data;
 
 namespace azure_app_mdsaleem1804_vs.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly azure_app_mdsaleem1804_vs.Data.AppDbContext _context;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(azure_app_mdsaleem1804_vs.Data.AppDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public void OnGet()
-        {
+        public IList<Person> Person { get;set; } = default!;
 
+        public async Task OnGetAsync()
+        {
+            if (_context.Persons != null)
+            {
+                Person = await _context.Persons.ToListAsync();
+            }
         }
     }
 }

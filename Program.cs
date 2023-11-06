@@ -1,6 +1,14 @@
+using azure_app_mdsaleem1804_vs.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
+var conenctionString = builder.Configuration.GetConnectionString("AzureSqlConnection");
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conenctionString));
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
